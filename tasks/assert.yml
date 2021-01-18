@@ -8,6 +8,18 @@
   when:
     - luks_devices is defined
 
+- name: test if item.name in luks_devices is set correctly
+  assert:
+    that:
+      - item.name is defined
+      - item.name is string
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - luks_devices is defined
+
 - name: test if item.device in luks_devices is set correctly
   assert:
     that:
@@ -27,7 +39,7 @@
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
-    label: "{{ item.device }}"
+    label: "{{ item.name }}"
   when:
     - luks_devices is defined
     - item.state is defined
@@ -39,7 +51,7 @@
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
-    label: "{{ item.device }}"
+    label: "{{ item.name }}"
   when:
     - luks_devices is defined
     - item.keyfile is defined
@@ -51,7 +63,7 @@
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
-    label: "{{ item.device }}"
+    label: "{{ item.name }}"
   when:
     - luks_devices is defined
     - item.passphrase is defined

@@ -25,6 +25,14 @@
       notify:
         - losetup
 
+    - name: place keyfile
+      copy:
+        content: "C0mpl3x1t7"
+        dest: /etc/luks_keyfile
+        owner: root
+        group: root
+        mode: "0400"
+
   handlers:
     - name: losetup
       command: losetup /dev/loop0 /disk.img

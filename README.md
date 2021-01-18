@@ -20,7 +20,11 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
     - role: robertdebock.luks
       luks_devices:
         - device: /dev/loop0
+          name: /dev/luks-loop0
           passphrase: "C0mpl3x1t7"
+        - device: /dev/loop1
+          name: /dev/luks-loop1
+          keyfile: /etc/luks_keyfile
 ```
 
 The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
@@ -52,6 +56,14 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
       notify:
         - losetup
 
+    - name: place keyfile
+      copy:
+        content: "C0mpl3x1t7"
+        dest: /etc/luks_keyfile
+        owner: root
+        group: root
+        mode: "0400"
+
   handlers:
     - name: losetup
       command: losetup /dev/loop0 /disk.img
@@ -67,10 +79,12 @@ These variables are set in `defaults/main.yml`:
 # defaults file for luks
 
 # luks_devices:
-#   - device: /dev/sda1
-#     keyfile: /etc/luks_keyfile
-#   - device: /dev/sda2
+#   - name: /dev/luks-sda1
+#     device: /dev/sda1
 #     passphrase: "C0mpl3x1t7"
+#   - name: /dev/luks-sda2
+#     device: /dev/sda2
+#     keyfile: /etc/luks_keyfile
 ```
 
 ## [Requirements](#requirements)
@@ -119,10 +133,6 @@ If you find issues, please register them in [GitHub](https://github.com/robertde
 ## [License](#license)
 
 Apache-2.0
-
-## [Contributors](#contributors)
-
-I'd like to thank everybody that made contributions to this repository. It motivates me, improves the code and is just fun to collaborate.
 
 
 ## [Author Information](#author-information)

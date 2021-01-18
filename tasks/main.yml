@@ -13,10 +13,13 @@
 
 - name: manage luks device
   community.crypto.luks_device:
+    name: "{{ item.name }}"
     device: "{{ item.device }}"
     state: "{{ item.state | default('present') }}"
     keyfile: "{{ item.keyfile | default(omit) }}"
     passphrase: "{{ item.passphrase | default(omit) }}"
   loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.device }}"
   when:
     - luks_devices is defined
