@@ -56,10 +56,10 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
       args:
         creates: /dev/loop0
 
-    - name: remove /dev/loop0
-      command: losetup -d /dev/loop0
-      args:
-        removes: /dev/loop0
+    # - name: remove /dev/loop0
+    #   command: losetup -d /dev/loop0
+    #   args:
+    #     removes: /dev/loop0
 
   handlers:
     - name: losetup
