@@ -20,10 +20,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
     - role: robertdebock.luks
       luks_devices:
         - device: /dev/loop0
-          name: /dev/luks-loop0
-          passphrase: "C0mpl3x1t7"
-        - device: /dev/loop1
-          name: /dev/luks-loop1
+          name: /dev/luks-disk
           keyfile: /etc/luks_keyfile
 ```
 
@@ -39,10 +36,20 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
     - role: robertdebock.bootstrap
 
   tasks:
+    - name: place keyfile
+      copy:
+        content: "C0mpl3x1t7"
+        dest: /etc/luks_keyfile
+        owner: root
+        group: root
+        mode: "0400"
+
     - name: make disk.img
       command: truncate -s 10M /disk.img
       args:
         creates: /disk.img
+      notify:
+        - losetup
 
     - name: make /dev/loop0
       command: mknod -m 0660 /dev/loop0 b 7 8
@@ -53,20 +60,10 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
       command: losetup -d /dev/loop0
       args:
         removes: /dev/loop0
-      notify:
-        - losetup
-
-    - name: place keyfile
-      copy:
-        content: "C0mpl3x1t7"
-        dest: /etc/luks_keyfile
-        owner: root
-        group: root
-        mode: "0400"
 
   handlers:
     - name: losetup
-      command: losetup /dev/loop0 /disk.img
+      command: losetup -P /dev/loop0 /disk.img
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.

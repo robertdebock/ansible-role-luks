@@ -14,12 +14,12 @@
     - name: make filesystem
       community.general.filesystem:
         fstype: ext4
-        dev: /dev/luks-loop0
+        dev: /dev/luks-disk
 
-    - name: mount /dev/luks-loop0
+    - name: mount /dev/luks-disk
       ansible.posix.mount:
         path: /data
-        src: /dev/luks-loop0
+        src: /dev/luks-disk
         fstype: ext4
         opts: default
         state: present
