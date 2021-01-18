@@ -1,0 +1,8 @@
+---
+#
+# Ansible managed
+#
+repository:
+  description: Manage encrypted devices using luks.
+  homepage: https://robertdebock.nl/
+  topics: bootstrap, luks, crypto, ansible, molecule, tox, playbook, hacktoberfest

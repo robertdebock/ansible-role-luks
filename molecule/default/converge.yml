@@ -1,0 +1,11 @@
+---
+- name: converge
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - role: ansible-role-luks
+      luks_devices:
+        - device: /dev/loop0
+          passphrase: "C0mpl3x1t7"

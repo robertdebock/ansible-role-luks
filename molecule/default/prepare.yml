@@ -1,0 +1,30 @@
+---
+- name: prepare
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  roles:
+    - role: robertdebock.bootstrap
+
+  tasks:
+    - name: make disk.img
+      command: truncate -s 10M /disk.img
+      args:
+        creates: /disk.img
+
+    - name: make /dev/loop0
+      command: mknod -m 0660 /dev/loop0 b 7 8
+      args:
+        creates: /dev/loop0
+
+    - name: remove /dev/loop0
+      command: losetup -d /dev/loop0
+      args:
+        removes: /dev/loop0
+      notify:
+        - losetup
+
+  handlers:
+    - name: losetup
+      command: losetup /dev/loop0 /disk.img

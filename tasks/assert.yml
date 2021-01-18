@@ -1,0 +1,57 @@
+---
+
+- name: test if luks_devices is set correctly
+  assert:
+    that:
+      - luks_devices is iterable
+    quiet: yes
+  when:
+    - luks_devices is defined
+
+- name: test if item.device in luks_devices is set correctly
+  assert:
+    that:
+      - item.device is defined
+      - item.device is string
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.device }}"
+  when:
+    - luks_devices is defined
+
+- name: test if item.state in luks_devices is set correctly
+  assert:
+    that:
+      - item.state in [ "absent", "present" ]
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.device }}"
+  when:
+    - luks_devices is defined
+    - item.state is defined
+
+- name: test if item.keyfile in luks_devices is set correctly
+  assert:
+    that:
+      - item.keyfile is string
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.device }}"
+  when:
+    - luks_devices is defined
+    - item.keyfile is defined
+
+- name: test if item.passphrase in luks_devices is set correctly
+  assert:
+    that:
+      - item.passphrase is string
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.device }}"
+  when:
+    - luks_devices is defined
+    - item.passphrase is defined

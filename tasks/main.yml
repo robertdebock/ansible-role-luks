@@ -1,0 +1,22 @@
+---
+# tasks file for luks
+
+- name: include assert.yml
+  import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
+
+- name: install requirements
+  package:
+    name: "{{ luks_requirements }}"
+    state: present
+
+- name: manage luks device
+  community.crypto.luks_device:
+    device: "{{ item.device }}"
+    state: "{{ item.state | default('present') }}"
+    keyfile: "{{ item.keyfile | default(omit) }}"
+    passphrase: "{{ item.passphrase | default(omit) }}"
+  loop: "{{ luks_devices }}"
+  when:
+    - luks_devices is defined
