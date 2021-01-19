@@ -8,5 +8,5 @@
     - role: ansible-role-luks
       luks_devices:
         - device: /dev/loop0
-          name: /dev/luks-disk
+          name: luks-disk
           keyfile: /etc/luks_keyfile

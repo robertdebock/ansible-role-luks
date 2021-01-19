@@ -20,7 +20,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
     - role: robertdebock.luks
       luks_devices:
         - device: /dev/loop0
-          name: /dev/luks-disk
+          name: luks-disk
           keyfile: /etc/luks_keyfile
 ```
 
@@ -45,25 +45,32 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
         mode: "0400"
 
     - name: make disk.img
-      command: truncate -s 10M /disk.img
+      command: dd if=/dev/zero of=/disk.img bs=1M count=100
       args:
         creates: /disk.img
-      notify:
-        - losetup
 
     - name: make /dev/loop0
       command: mknod -m 0660 /dev/loop0 b 7 8
       args:
         creates: /dev/loop0
 
-    # - name: remove /dev/loop0
-    #   command: losetup -d /dev/loop0
-    #   args:
-    #     removes: /dev/loop0
-
-  handlers:
-    - name: losetup
+    - name: losetup -P /dev/loop0 /disk.img
       command: losetup -P /dev/loop0 /disk.img
+      args:
+        creates: nothing
+      failed_when: no
+
+    - name: losetup -d /dev/loop0
+      command: lsosetup -d /dev/loop0
+      args:
+        creates: nothing
+      failed_when: no
+
+    - name: losetup -P /dev/loop0 /disk.img
+      command: losetup -P /dev/loop0 /disk.img
+      args:
+        creates: nothing
+      failed_when: no
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
@@ -75,13 +82,11 @@ These variables are set in `defaults/main.yml`:
 ---
 # defaults file for luks
 
-# luks_devices:
-#   - name: /dev/luks-sda1
-#     device: /dev/sda1
-#     passphrase: "C0mpl3x1t7"
-#   - name: /dev/luks-sda2
-#     device: /dev/sda2
-#     keyfile: /etc/luks_keyfile
+# The state of luks devices if not mentioned specifically.
+luks_default_state: opened
+
+# A list of devices to encrypt.
+luks_devices: []
 ```
 
 ## [Requirements](#requirements)

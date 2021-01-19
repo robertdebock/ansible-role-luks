@@ -1,5 +1,13 @@
 ---
 
+- name: test if luks_default_state is set correctly
+  assert:
+    that:
+      - luks_default_state is defined
+      - luks_default_state is string
+      - luks_default_state in [ "absent", "closed", "opened", "present" ]
+    quiet: yes
+
 - name: test if luks_devices is set correctly
   assert:
     that:

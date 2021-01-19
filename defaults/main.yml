@@ -1,10 +1,8 @@
 ---
 # defaults file for luks
 
-# luks_devices:
-#   - name: /dev/luks-sda1
-#     device: /dev/sda1
-#     passphrase: "C0mpl3x1t7"
-#   - name: /dev/luks-sda2
-#     device: /dev/sda2
-#     keyfile: /etc/luks_keyfile
+# The state of luks devices if not mentioned specifically.
+luks_default_state: opened
+
+# A list of devices to encrypt.
+luks_devices: []

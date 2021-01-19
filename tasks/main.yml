@@ -15,7 +15,7 @@
   community.crypto.luks_device:
     name: "{{ item.name }}"
     device: "{{ item.device }}"
-    state: "{{ item.state | default('present') }}"
+    state: "{{ item.state | default(luks_default_state) }}"
     keyfile: "{{ item.keyfile | default(omit) }}"
     passphrase: "{{ item.passphrase | default(omit) }}"
   loop: "{{ luks_devices }}"
