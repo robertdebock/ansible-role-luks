@@ -5,21 +5,5 @@
   gather_facts: no
 
   tasks:
-    - name: create /data
-      file:
-        path: /data
-        state: directory
-        mode: "0750"
-
-    - name: make filesystem
-      community.general.filesystem:
-        fstype: ext4
-        dev: /dev/luks-disk
-
-    - name: mount /dev/luks-disk
-      ansible.posix.mount:
-        path: /data
-        src: /dev/luks-disk
-        fstype: ext4
-        opts: default
-        state: present
+    - name: do something
+      setup:
