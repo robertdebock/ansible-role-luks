@@ -12,7 +12,7 @@ _luks_requirements:
     - util-linux
   Suse:
     - cryptsetup
-    - cracklib-dict-full
+    - cracklib-dict-small
     - util-linux
 
 luks_requirements: "{{ _luks_requirements[ansible_os_family] | default(_luks_requirements['default']) }}"
