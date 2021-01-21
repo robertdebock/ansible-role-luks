@@ -30,4 +30,4 @@
 
   handlers:
     - name: link disk.img to /dev/loop0
-      command: losetup --partscan /dev/loop0 /disk.img
+      command: losetup /dev/loop0 /disk.img

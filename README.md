@@ -58,7 +58,7 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
 
   handlers:
     - name: link disk.img to /dev/loop0
-      command: losetup --partscan /dev/loop0 /disk.img
+      command: losetup /dev/loop0 /disk.img
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
