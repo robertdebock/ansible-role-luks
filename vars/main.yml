@@ -6,6 +6,10 @@ _luks_requirements:
     - cryptsetup
     - cracklib-dicts
     - util-linux
+  Alpine:
+    - cryptsetup
+    - cracklib
+    - util-linux
   Debian:
     - cryptsetup
     - cracklib-runtime
