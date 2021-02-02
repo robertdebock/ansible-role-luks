@@ -24,9 +24,6 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
           keyfile:
             path: /etc/luks_managed_keyfile
             content: "C0mpl3x1t7"
-        - device: /dev/loop1
-          name: luksdisk1
-          passphrase: "C0mpl3x1t7"
 ```
 
 The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
@@ -46,11 +43,6 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
       args:
         creates: /disk0.img
 
-    - name: create disk1.img
-      command: dd if=/dev/zero of=/disk1.img bs=1M count=100
-      args:
-        creates: /disk1.img
-
     - name: create /dev/loop0
       command: mknod /dev/loop0 b 7 8
       args:
@@ -58,19 +50,9 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
       notify:
         - link disk0.img to /dev/loop0
 
-    - name: create /dev/loop1
-      command: mknod /dev/loop1 b 7 8
-      args:
-        creates: /dev/loop1
-      notify:
-        - link disk1.img to /dev/loop1
-
   handlers:
     - name: link disk0.img to /dev/loop0
       command: losetup /dev/loop0 /disk0.img
-
-    - name: link disk1.img to /dev/loop1
-      command: losetup /dev/loop1 /disk1.img
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
