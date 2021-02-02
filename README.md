@@ -41,14 +41,6 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
     - role: robertdebock.bootstrap
 
   tasks:
-    - name: place luks_keyfile
-      copy:
-        content: "C0mpl3x1t7"
-        dest: /etc/luks_keyfile
-        owner: root
-        group: root
-        mode: "0400"
-
     - name: create disk0.img
       command: dd if=/dev/zero of=/disk0.img bs=1M count=100
       args:
