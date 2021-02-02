@@ -55,7 +55,7 @@
 - name: test if item.keyfile in luks_devices is set correctly
   assert:
     that:
-      - item.keyfile is map
+      - item.keyfile is dict
       - item.keyfile.path is defined
       - item.keyfile.path is string
       - item.keyfile.content is defined
