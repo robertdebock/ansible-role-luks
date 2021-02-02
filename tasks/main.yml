@@ -15,6 +15,9 @@
   copy:
     path: "{{ item.keyfile.path }}"
     content: "{{ item.keyfile.path }}"
+    owner: root
+    group: root
+    mode: "0400"
   loop: "{{ luks_devices }}"
   when:
     - item.keyfile is defined
