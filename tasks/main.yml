@@ -11,12 +11,20 @@
     name: "{{ luks_requirements }}"
     state: present
 
+- name: place keyfile
+  copy:
+    path: "{{ item.keyfile.path }}"
+    content: "{{ item.keyfile.path }}"
+  loop: "{{ luks_devices }}"
+  when:
+    - item.keyfile is defined
+
 - name: manage luks device
   community.crypto.luks_device:
     name: "{{ item.name }}"
     device: "{{ item.device }}"
     state: "{{ item.state | default(luks_default_state) }}"
-    keyfile: "{{ item.keyfile | default(omit) }}"
+    keyfile: "{{ item.keyfile.path | default(omit) }}"
     passphrase: "{{ item.passphrase | default(omit) }}"
   loop: "{{ luks_devices }}"
   loop_control:

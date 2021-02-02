@@ -8,5 +8,10 @@
     - role: ansible-role-luks
       luks_devices:
         - device: /dev/loop0
-          name: luksdisk
-          keyfile: /etc/luks_keyfile
+          name: luksdisk0
+          keyfile:
+            path: /etc/luks_managed_keyfile
+            content: "C0mpl3x1t7"
+        - device: /dev/loop1
+          name: luksdisk1
+          passphrase: "C0mpl3x1t7"

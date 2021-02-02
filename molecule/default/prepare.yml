@@ -16,18 +16,33 @@
         group: root
         mode: "0400"
 
-    - name: create disk.img
-      command: dd if=/dev/zero of=/disk.img bs=1M count=100
+    - name: create disk0.img
+      command: dd if=/dev/zero of=/disk0.img bs=1M count=100
       args:
-        creates: /disk.img
+        creates: /disk0.img
+
+    - name: create disk1.img
+      command: dd if=/dev/zero of=/disk1.img bs=1M count=100
+      args:
+        creates: /disk1.img
 
     - name: create /dev/loop0
       command: mknod /dev/loop0 b 7 8
       args:
         creates: /dev/loop0
       notify:
-        - link disk.img to /dev/loop0
+        - link disk0.img to /dev/loop0
+
+    - name: create /dev/loop1
+      command: mknod /dev/loop1 b 7 8
+      args:
+        creates: /dev/loop1
+      notify:
+        - link disk1.img to /dev/loop1
 
   handlers:
-    - name: link disk.img to /dev/loop0
-      command: losetup /dev/loop0 /disk.img
+    - name: link disk0.img to /dev/loop0
+      command: losetup /dev/loop0 /disk0.img
+
+    - name: link disk1.img to /dev/loop1
+      command: losetup /dev/loop1 /disk1.img

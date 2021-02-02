@@ -4,7 +4,7 @@ Manage encrypted devices using luks.
 
 |GitHub|GitLab|Quality|Downloads|Version|
 |------|------|-------|---------|-------|
-|[![github](https://github.com/robertdebock/ansible-role-luks/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-luks/actions)|[![gitlab](https://gitlab.com/robertdebock/ansible-role-luks/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-luks)|[![quality](https://img.shields.io/ansible/quality/)](https://galaxy.ansible.com/robertdebock/luks)|[![downloads](https://img.shields.io/ansible/role/d/)](https://galaxy.ansible.com/robertdebock/luks)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-luks.svg)](https://github.com/robertdebock/ansible-role-luks/releases/)|
+|[![github](https://github.com/robertdebock/ansible-role-luks/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-luks/actions)|[![gitlab](https://gitlab.com/robertdebock/ansible-role-luks/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-luks)|[![quality](https://img.shields.io/ansible/quality/52794)](https://galaxy.ansible.com/robertdebock/luks)|[![downloads](https://img.shields.io/ansible/role/d/52794)](https://galaxy.ansible.com/robertdebock/luks)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-luks.svg)](https://github.com/robertdebock/ansible-role-luks/releases/)|
 
 ## [Example Playbook](#example-playbook)
 
@@ -20,8 +20,13 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
     - role: robertdebock.luks
       luks_devices:
         - device: /dev/loop0
-          name: luksdisk
-          keyfile: /etc/luks_keyfile
+          name: luksdisk0
+          keyfile:
+            path: /etc/luks_managed_keyfile
+            content: "C0mpl3x1t7"
+        - device: /dev/loop1
+          name: luksdisk1
+          passphrase: "C0mpl3x1t7"
 ```
 
 The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
@@ -44,21 +49,36 @@ The machine needs to be prepared in CI this is done using `molecule/resources/pr
         group: root
         mode: "0400"
 
-    - name: create disk.img
-      command: dd if=/dev/zero of=/disk.img bs=1M count=100
+    - name: create disk0.img
+      command: dd if=/dev/zero of=/disk0.img bs=1M count=100
       args:
-        creates: /disk.img
+        creates: /disk0.img
+
+    - name: create disk1.img
+      command: dd if=/dev/zero of=/disk1.img bs=1M count=100
+      args:
+        creates: /disk1.img
 
     - name: create /dev/loop0
       command: mknod /dev/loop0 b 7 8
       args:
         creates: /dev/loop0
       notify:
-        - link disk.img to /dev/loop0
+        - link disk0.img to /dev/loop0
+
+    - name: create /dev/loop1
+      command: mknod /dev/loop1 b 7 8
+      args:
+        creates: /dev/loop1
+      notify:
+        - link disk1.img to /dev/loop1
 
   handlers:
-    - name: link disk.img to /dev/loop0
-      command: losetup /dev/loop0 /disk.img
+    - name: link disk0.img to /dev/loop0
+      command: losetup /dev/loop0 /disk0.img
+
+    - name: link disk1.img to /dev/loop1
+      command: losetup /dev/loop1 /disk1.img
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
