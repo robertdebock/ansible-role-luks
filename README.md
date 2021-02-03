@@ -1,6 +1,6 @@
 # [luks](#luks)
 
-Manage encrypted devices using luks.
+Create encrypted devices using luks and open them at boot.
 
 |GitHub|GitLab|Quality|Downloads|Version|
 |------|------|-------|---------|-------|
@@ -21,9 +21,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
       luks_devices:
         - device: /dev/loop0
           name: luksdisk0
-          keyfile:
-            path: /etc/luks_managed_keyfile
-            content: "C0mpl3x1t7"
+          passphrase: "hhurtlijidrcfhehdtrlulffchctkbrrie"
 ```
 
 The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:

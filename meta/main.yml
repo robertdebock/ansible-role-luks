@@ -2,7 +2,7 @@
 galaxy_info:
   author: Robert de Bock
   role_name: luks
-  description: Manage encrypted devices using luks.
+  description: Create encrypted devices using luks and open them at boot.
   license: Apache-2.0
   company: none
   min_ansible_version: "2.10"

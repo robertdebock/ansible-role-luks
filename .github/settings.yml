@@ -3,6 +3,6 @@
 # Ansible managed
 #
 repository:
-  description: Manage encrypted devices using luks.
+  description: Create encrypted devices using luks and open them at boot.
   homepage: https://robertdebock.nl/
   topics: luks, crypto, ansible, molecule, tox, playbook, hacktoberfest
