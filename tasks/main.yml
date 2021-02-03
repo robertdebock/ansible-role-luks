@@ -13,8 +13,8 @@
 
 - name: place keyfile
   copy:
-    path: "{{ item.keyfile.path }}"
-    content: "{{ item.keyfile.path }}"
+    dest: "{{ item.keyfile.path }}"
+    content: "{{ item.keyfile.content }}"
     owner: root
     group: root
     mode: "0400"
