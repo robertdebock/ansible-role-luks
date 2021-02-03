@@ -63,3 +63,51 @@
   when:
     - luks_devices is defined
     - item.passphrase is defined
+
+- name: test if item.keyfile in luks_devices is set correctly
+  assert:
+    that:
+      - item.keyfile is string
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - luks_devices is defined
+    - item.keyfile is defined
+
+- name: test if either keyfile or passphrase is used
+  assert:
+    that:
+      - item.passphrase is not defined
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - luks_devices is defined
+    - item.keyfile is defined
+
+- name: test if either passphrase or keyfile is used
+  assert:
+    that:
+      - item.keyfile is not defined
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - luks_devices is defined
+    - item.passphrase is defined
+
+- name: test if either passphrase or keyfile are set
+  assert:
+    that:
+      - item.keyfile is defined or
+        item.passphrase is defined
+    quiet: yes
+  loop: "{{ luks_devices }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - luks_devices is defined

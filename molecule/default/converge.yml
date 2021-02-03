@@ -9,4 +9,4 @@
       luks_devices:
         - device: /dev/loop0
           name: luksdisk0
-          passphrase: "hhurtlijidrcfhehdtrlulffchctkbrrie"
+          keyfile: /etc/luksdisk0.keyfile
