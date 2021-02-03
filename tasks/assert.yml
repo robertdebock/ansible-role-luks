@@ -52,22 +52,6 @@
     - luks_devices is defined
     - item.state is defined
 
-- name: test if item.keyfile in luks_devices is set correctly
-  assert:
-    that:
-      - item.keyfile is mapping
-      - item.keyfile.path is defined
-      - item.keyfile.path is string
-      - item.keyfile.content is defined
-      - item.keyfile.content is string
-    quiet: yes
-  loop: "{{ luks_devices }}"
-  loop_control:
-    label: "{{ item.name }}"
-  when:
-    - luks_devices is defined
-    - item.keyfile is defined
-
 - name: test if item.passphrase in luks_devices is set correctly
   assert:
     that:
