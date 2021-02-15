@@ -21,7 +21,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
       luks_devices:
         - device: /dev/loop0
           name: luksdisk0
-          passphrase: "hhurtlijidrcfhehdtrlulffchctkbrrie"
+          keyfile: /etc/luksdisk0.keyfile
 ```
 
 The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
