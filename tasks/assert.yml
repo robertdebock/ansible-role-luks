@@ -1,7 +1,7 @@
 ---
 
 - name: test if luks_default_state is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - luks_default_state is defined
       - luks_default_state is string
@@ -9,7 +9,7 @@
     quiet: yes
 
 - name: test if luks_devices is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - luks_devices is iterable
     quiet: yes
@@ -17,7 +17,7 @@
     - luks_devices is defined
 
 - name: test if item.name in luks_devices is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.name is defined
       - item.name is string
@@ -29,7 +29,7 @@
     - luks_devices is defined
 
 - name: test if item.device in luks_devices is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.device is defined
       - item.device is string
@@ -41,7 +41,7 @@
     - luks_devices is defined
 
 - name: test if item.state in luks_devices is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.state in [ "absent", "present" ]
     quiet: yes
@@ -53,7 +53,7 @@
     - item.state is defined
 
 - name: test if item.passphrase in luks_devices is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.passphrase is string
     quiet: yes
@@ -65,7 +65,7 @@
     - item.passphrase is defined
 
 - name: test if item.keyfile in luks_devices is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.keyfile is string
     quiet: yes
@@ -77,7 +77,7 @@
     - item.keyfile is defined
 
 - name: test if either keyfile or passphrase is used
-  assert:
+  ansible.builtin.assert:
     that:
       - item.passphrase is not defined
     quiet: yes
@@ -89,7 +89,7 @@
     - item.keyfile is defined
 
 - name: test if either passphrase or keyfile is used
-  assert:
+  ansible.builtin.assert:
     that:
       - item.keyfile is not defined
     quiet: yes
@@ -101,7 +101,7 @@
     - item.passphrase is defined
 
 - name: test if either passphrase or keyfile are set
-  assert:
+  ansible.builtin.assert:
     that:
       - item.keyfile is defined or
         item.passphrase is defined
