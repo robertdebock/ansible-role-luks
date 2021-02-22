@@ -12,7 +12,7 @@
     state: present
 
 - name: create keyfile
-  command: dd if=/dev/urandom of={{ item.keyfile }} bs=2048 count=2
+  ansible.builtin.command: dd if=/dev/urandom of={{ item.keyfile }} bs=2048 count=2
   args:
     creates: "{{ item.keyfile }}"
   loop: "{{ luks_devices }}"
