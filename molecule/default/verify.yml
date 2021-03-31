@@ -6,4 +6,4 @@
 
   tasks:
     - name: do something
-      setup:
+      ansible.builtin.setup:
