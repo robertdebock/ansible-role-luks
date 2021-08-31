@@ -37,7 +37,7 @@ The machine needs to be prepared in CI this is done using `molecule/default/prep
 
   tasks:
     - name: create disk0.img
-      command: dd if=/dev/zero of=/disk0.img bs=1M count=100
+      command: dd if=/dev/zero of=/disk0.img bs=1 count=1G
       args:
         creates: /disk0.img
 
