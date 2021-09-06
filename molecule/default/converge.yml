@@ -6,7 +6,7 @@
 
   roles:
     - role: ansible-role-luks
-      luks_devices:
-        - device: /dev/loop0
-          name: luksdisk0
-          keyfile: /etc/luksdisk0.keyfile
+      # luks_devices:
+      #   - device: /dev/loop0
+      #     name: luksdisk0
+      #     keyfile: /etc/luksdisk0.keyfile
