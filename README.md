@@ -18,10 +18,6 @@ This example is taken from `molecule/default/converge.yml` and is tested on each
 
   roles:
     - role: robertdebock.luks
-      # luks_devices:
-      #   - device: /dev/loop0
-      #     name: luksdisk0
-      #     keyfile: /etc/luksdisk0.keyfile
 ```
 
 The machine needs to be prepared in CI this is done using `molecule/default/prepare.yml`:
@@ -67,6 +63,12 @@ luks_default_state: opened
 
 # A list of devices to encrypt.
 luks_devices: []
+
+# For example:
+# luks_devices:
+#   - device: /dev/loop0
+#     name: luksdisk0
+#     keyfile: /etc/luksdisk0.keyfile
 ```
 
 ## [Requirements](#requirements)
