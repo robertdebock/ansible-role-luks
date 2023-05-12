@@ -5,5 +5,5 @@
   gather_facts: no
 
   tasks:
-    - name: do something
+    - name: Do something
       ansible.builtin.setup:
