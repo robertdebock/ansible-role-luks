@@ -21,6 +21,7 @@
     that:
       - item.name is defined
       - item.name is string
+      - item.name is not none
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
@@ -33,6 +34,7 @@
     that:
       - item.device is defined
       - item.device is string
+      - item.device is not none
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
@@ -56,6 +58,7 @@
   ansible.builtin.assert:
     that:
       - item.passphrase is string
+      - item.passphrase is not none
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
@@ -68,6 +71,7 @@
   ansible.builtin.assert:
     that:
       - item.keyfile is string
+      - item.keyfile is not none
     quiet: yes
   loop: "{{ luks_devices }}"
   loop_control:
