@@ -1,4 +1,4 @@
-# Ansible role [luks](#luks)
+# [Ansible role luks](#luks)
 
 Create encrypted devices using luks and open them at boot.
 
