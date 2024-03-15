@@ -32,7 +32,7 @@
     state: "{{ item.state | default(luks_default_state) }}"
     passphrase: "{{ item.passphrase | default(omit) }}"  # noqa: args[module]
     keyfile: "{{ item.keyfile | default(omit) }}"  # noqa: args[module]
-  no_log: true
+  no_log: yes
   loop: "{{ luks_devices }}"
   loop_control:
     label: "{{ item.device }}"
