@@ -18,7 +18,7 @@
     creates: "{{ item.keyfile }}"
   loop: "{{ luks_devices }}"
   loop_control:
-    label: "{{ item.keyfile }}"
+    label: "{{ item.device }} ({{ item.keyfile | default('no keyfile') }})"
   when:
     - luks_devices is defined
     - item.keyfile is defined
